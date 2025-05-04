@@ -6,19 +6,40 @@ Description: app for running the serverside for the wlw_project during the
 fourth semester of my BSc programme.
 """
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
+import os
 
 app = Flask(__name__)
 
+tasks=[
+            {
+                'id': 1,
+                'name': 'Task 1',
+                'description': 'Description of Task 1',
+                'status': 'pending'
+            },
+            {
+                'id': 2,
+                'name': 'Task 2',
+                'description': 'Description of Task 2',
+                'status': 'completed'
+            }
+        ]
+
 @app.route('/')
-def home():
-    return "Household Scheduler API is running."
+def index():
+    return send_from_directory('../client', 'index.html')
+
+@app.route('/<path:path>')
+def static_files(path):
+	return send_from_directory('../client', path)
+
 
 
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify([]) #Empty list for now
+    return jsonify(tasks)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
 
