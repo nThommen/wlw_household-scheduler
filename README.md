@@ -8,18 +8,7 @@ Die Applikation basiert auf einem Webinterface (Client) und einer python-Applika
 
 **Funktionsdiagramm mit Server- und Clientseite**
 
-+--------------------+                     +----------------------+
-|  Web Browser       |  <-- HTTP GET/POST  |  Raspberry Pi Server  |
-|  (Client App)      |      requests       |  (Flask App)          |
-|                    |  ---------------->  |                      |
-|  - index.html      |                     |  - app.py             |
-|  - app.js          |                     |  - tasks in memory    |
-|  - styles.css      |                     |                      |
-+--------------------+                     +----------------------+
-        ^                                               
-        |                                                
-        |  Receives JSON responses                         
-        +--------------------------------                
+<img width="413" alt="Funktionsdiagramm_wlwProjekt_ver1 0" src="https://github.com/user-attachments/assets/123d14a1-ac6d-4913-8d13-f0c7589a1039" />
 
 ##### Client
 
