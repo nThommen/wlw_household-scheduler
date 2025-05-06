@@ -8,9 +8,25 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Household Scheduler</h1>
-    <button id="loadTasks">Load Task</button>
-    <ul id="taskList"></ul>
+    <div id="taskSection">
+        <h1>Household Scheduler</h1>
+        <button id="loadTasks">Load Task</button>
+        <ul id="taskList"></ul>
+    </div>
+    
+    <div id="taskForm">
+        <h2>Add Task</h2>
+        <form id="taskForm">
+            <input type="text" id="newTaskName" placeholder="Task Name" required>
+            <input type="text" id="newTaskDescription" placeholder="Task Description" required>
+            <input type="checkbox" id="newTaskStatus"> Completed
+        </form>
+        <button type="addTask" id="addTask">Add Task</button>
+    </div>
+
+
+
+
     
 </body>
 </html>
