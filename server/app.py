@@ -9,24 +9,34 @@ fourth semester of my BSc programme.
 from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS
 import os
+import json
 
 app = Flask(__name__)
 CORS(app)
+tasksFile = 'tasks.json'
 
-tasks=[
-            {
-                'id': 1,
-                'name': 'Task 1',
-                'description': 'Description of Task 1',
-                'status': 'pending'
-            },
-            {
-                'id': 2,
-                'name': 'Task 2',
-                'description': 'Description of Task 2',
-                'status': 'completed'
-            }
-        ]
+if os.path.exists(tasksFile):
+    with open(tasksFile, 'r') as f:
+        tasks = json.load(f)
+else:
+    tasks = [
+        {
+            'id': 1,
+            'name': 'Task 1',
+            'description': 'Description of Task 1',
+            'status': 'pending'
+        },
+        {
+            'id': 2,
+            'name': 'Task 2',
+            'description': 'Description of Task 2',
+            'status': 'completed'
+        }
+    ]
+
+def save_tasks():
+    with open(tasksFile, 'w') as f:
+        json.dump(tasks, f)
 
 @app.route('/')
 def index():
@@ -52,8 +62,15 @@ def add_task():
         'status': data.get('status', 'pending')
     }
     tasks.append(new_task)
+    save_tasks()
     return jsonify(new_task), 201
+
+@app.route('/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    global tasks
+    tasks = [task for task in tasks if task['id'] != task_id]
+    save_tasks()
+    return jsonify({'result': True})
 
 if __name__ == '__main__':
     app.run(debug=True)
-

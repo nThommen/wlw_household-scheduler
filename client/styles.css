@@ -1,6 +1,15 @@
 .tasks {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
     background-color: bisque;
+}
+
+.task {
+    background-color: lightblue;
+    border: 1px solid blue;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
 }

@@ -1,19 +1,35 @@
 window.onload = () => {
-    document.getElementById("loadTasks").onclick = loadTasks;
+    loadTasks();
     document.getElementById("addTask").onclick = addTask;
-    document.getElementById("deleteTask").onclick = deleteTask;
 }
 
 function loadTasks () {
     fetch('/tasks')
         .then(response => response.json())
         .then(tasks => {
-            const list = document.getElementById("taskList");
-            list.innerHTML = '';
             tasks.forEach(task => {
-                const li = document.createElement("li");
-                li.textContent = task.name + ": " + task.description + " - " + task.status;
-                list.appendChild(li);
+                const taskDiv = document.createElement("div");
+                taskDiv.classList.add("task");
+                taskDiv.setAttribute("data-id", task.id);
+                taskDiv.setAttribute("data-status", task.status);
+
+                const taskContent = `
+                    <h3>${task.name}</h3>
+                    <p>${task.description}</p>
+                    <input type="checkbox" ${task.status === "completed" ? "checked" : ""}> Completed
+                `;
+                taskDiv.innerHTML = taskContent;
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.onclick = () => {
+                    deleteTask(task.id);
+                };
+
+                taskDiv.appendChild(deleteButton);
+
+                const tasksContainer = document.querySelector(".tasks");
+                tasksContainer.appendChild(taskDiv);
             });
         })
 }
@@ -45,16 +61,23 @@ function addTask() {
 
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("task");
+        taskDiv.setAttribute("data-id", task.id);
+        taskDiv.setAttribute("data-status", task.status);
 
         const taskContent = `
             <h3>${task.name}</h3>
             <p>${task.description}</p>
             <input type="checkbox" ${task.status === "completed" ? "checked" : ""}> Completed
-            <button onclick="deleteTask(${task.id})">Delete</button>
         `;
         taskDiv.innerHTML = taskContent;
 
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = () => {
+            deleteTask(task.id);
+        };
 
+        taskDiv.appendChild(deleteButton);
 
         const tasksContainer = document.querySelector(".tasks");
         tasksContainer.appendChild(taskDiv);
@@ -76,9 +99,9 @@ function deleteTask(taskId) {
     .then(response => {
         if (response.ok) {
             console.log("Task deleted");
-            loadTasks();
+            //loadTasks();
         } else {
-            console.error("Error deleting task");
+            console.error("Error deleting task - response not ok");
         }
     })
     .then(() => {
