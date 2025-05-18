@@ -59,6 +59,8 @@ def add_task():
         'id': tasks[-1]['id'] + 1 if tasks else 1,
         'name': data.get('name', 'New Task'),
         'description': data.get('description', 'No description provided'),
+        'duedate': data.get('duedate', 'No due date provided'),
+        'assignee': data.get('assignee', 'Unassigned'),
         'status': data.get('status', 'pending')
     }
     tasks.append(new_task)
@@ -67,8 +69,10 @@ def add_task():
 
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
-    global tasks
-    tasks = [task for task in tasks if task['id'] != task_id]
+    task_to_delete = next((task for task in tasks if task['id'] == task_id), None)
+    if not task_to_delete:
+        return jsonify({'error': 'Task not found'}), 404
+    tasks.remove(task_to_delete)
     save_tasks()
     return jsonify({'result': True})
 

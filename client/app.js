@@ -1,6 +1,7 @@
 window.onload = () => {
     loadTasks();
     document.getElementById("addTask").onclick = addTask;
+    emptyFields();
 }
 
 function loadTasks () {
@@ -16,6 +17,8 @@ function loadTasks () {
                 const taskContent = `
                     <h3>${task.name}</h3>
                     <p>${task.description}</p>
+                    <p>Deadline: ${task.duedate}</p>
+                    <p>Assignee: ${task.assignee}</p>
                     <input type="checkbox" ${task.status === "completed" ? "checked" : ""}> Completed
                 `;
                 taskDiv.innerHTML = taskContent;
@@ -42,7 +45,9 @@ function addTask() {
 
     const taskName = document.getElementById("newTaskName").value;
     const taskDescription = document.getElementById("newTaskDescription").value;
-    const taskStatus = "pending"; // Default status for new tasks
+    const taskDueDate = document.getElementById("newTaskDueDate").value;
+    const taskAssignee = document.getElementById("newTaskAssignee").value;
+    const taskStatus = "pending";
 
     fetch('/tasks', {
         method: 'POST',
@@ -52,6 +57,8 @@ function addTask() {
         body: JSON.stringify({
             name: taskName,
             description: taskDescription,
+            duedate: taskDueDate,
+            assignee: taskAssignee,
             status: taskStatus
         })
     })
@@ -62,17 +69,22 @@ function addTask() {
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("task");
         taskDiv.setAttribute("data-id", task.id);
+        taskDiv.setAttribute("data-duedate", task.duedate);
+        taskDiv.setAttribute("data-assignee", task.assignee);
         taskDiv.setAttribute("data-status", task.status);
 
         const taskContent = `
             <h3>${task.name}</h3>
             <p>${task.description}</p>
+            <p>Deadline: ${task.duedate}</p>
+            <p>Assignee: ${task.assignee}</p>
             <input type="checkbox" ${task.status === "completed" ? "checked" : ""}> Completed
         `;
         taskDiv.innerHTML = taskContent;
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
+        deleteButton.setAttribute("data-id", task.id);
         deleteButton.onclick = () => {
             deleteTask(task.id);
         };
@@ -82,10 +94,9 @@ function addTask() {
         const tasksContainer = document.querySelector(".tasks");
         tasksContainer.appendChild(taskDiv);
 
-
-
-        document.getElementById("newTaskName").value = '';
-        document.getElementById("newTaskDescription").value = '';
+    })
+    .then(() => {
+        emptyFields();
     })
     .catch(error => {
         console.error("Error adding task:", error);
@@ -99,9 +110,9 @@ function deleteTask(taskId) {
     .then(response => {
         if (response.ok) {
             console.log("Task deleted");
-            //loadTasks();
         } else {
             console.error("Error deleting task - response not ok");
+            alert("Error: Something went wrong!");
         }
     })
     .then(() => {
@@ -113,4 +124,11 @@ function deleteTask(taskId) {
     .catch(error => {
         console.error("Error deleting task:", error);
     });
+}
+
+function emptyFields() {
+    document.getElementById("newTaskName").value = "";
+    document.getElementById("newTaskDescription").value = "";
+    document.getElementById("newTaskDueDate").value = "";
+    document.getElementById("newTaskAssignee").value = "";
 }
