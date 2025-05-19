@@ -10,7 +10,8 @@ Die Applikation basiert auf einem Webinterface (Client) und einer python-Applika
 
 <img width="413" alt="Funktionsdiagramm_wlwProjekt_ver1 0" src="https://github.com/user-attachments/assets/123d14a1-ac6d-4913-8d13-f0c7589a1039" />
 
-![wlw_household_scheduler drawio](https://github.com/user-attachments/assets/740eb0d1-cf21-4a49-b8d2-690d0cf318f4)
+![wlw_household_scheduler drawio](https://github.com/user-attachments/assets/609b13ca-db45-41ca-89b2-6863b4f4a444)
+
 
 ##### Client
 
