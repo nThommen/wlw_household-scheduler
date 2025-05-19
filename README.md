@@ -10,6 +10,8 @@ Die Applikation basiert auf einem Webinterface (Client) und einer python-Applika
 
 <img width="413" alt="Funktionsdiagramm_wlwProjekt_ver1 0" src="https://github.com/user-attachments/assets/123d14a1-ac6d-4913-8d13-f0c7589a1039" />
 
+![wlw_household_scheduler drawio](https://github.com/user-attachments/assets/740eb0d1-cf21-4a49-b8d2-690d0cf318f4)
+
 ##### Client
 
 Der Client ist eine Webseite auf welche innerhalb desselben LAN zugegriffen werden kann, mit welchem auch der Raspby verbunden ist. Die Webseite ist also lokal gehostet. Durch ausfüllen des Forms für einen neuen Task und anschliessendem bestätigen des Buttons "Add Task" kann ein neuer Task erstellt werden, der sofort gelistet wird.
@@ -18,6 +20,6 @@ Der Client ist eine Webseite auf welche innerhalb desselben LAN zugegriffen werd
 
 Der Server wird mittels Pyflask-App auf einem Raspby gehostet.
 
-**GET-Endpoint:** Durch den GET-Endpoint get.tasks() werden die aufgelisteten Tasks aus dem JSON-File geholt.
+**GET-Endpoint:** Durch den GET-Endpoint get.tasks() werden die aufgelisteten Tasks aus dem JSON-File geholt und app.js als Liste übergeben.
 
 **POST-Endpoint:** Der POST-Endpoint nimmt durch betätigen des Buttons "Add Task" die Strings aus den Feldern "Task Name" und "Task Description" entgegen und fügt diese als neuen Task dem JSON-File hinzu.
