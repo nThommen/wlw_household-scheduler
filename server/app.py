@@ -52,6 +52,20 @@ def static_files(path):
 def get_tasks():
     return jsonify(tasks)
 
+@app.route('/tasks/<int:task_id>', methods=['PUT'])
+def update_task(task_id):    
+    data = request.get_json()
+    task_to_update = next((task for task in tasks if task['id'] == task_id), None)
+    if not task_to_update:
+        return jsonify({'error': 'Task not found'}), 404
+    task_to_update['name'] = data.get('name', task_to_update['name'])
+    task_to_update['description'] = data.get('description', task_to_update['description'])
+    task_to_update['duedate'] = data.get('duedate', task_to_update['duedate'])
+    task_to_update['assignee'] = data.get('assignee', task_to_update['assignee'])
+    task_to_update['status'] = data.get('status', task_to_update['status'])
+    save_tasks()
+    return jsonify(task_to_update)
+
 @app.route('/tasks', methods=['POST'])
 def add_task():
     data = request.get_json()

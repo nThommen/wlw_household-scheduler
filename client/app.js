@@ -4,12 +4,8 @@ window.onload = () => {
     emptyFields();
 }
 
-function loadTasks () {
-    fetch('/tasks')
-        .then(response => response.json())
-        .then(tasks => {
-            tasks.forEach(task => {
-                const taskDiv = document.createElement("div");
+function createTaskElement(task) {
+    const taskDiv = document.createElement("div");
                 taskDiv.classList.add("task");
                 taskDiv.setAttribute("data-id", task.id);
                 taskDiv.setAttribute("data-status", task.status);
@@ -19,9 +15,17 @@ function loadTasks () {
                     <p>${task.description}</p>
                     <p>Deadline: ${task.duedate}</p>
                     <p>Assignee: ${task.assignee}</p>
-                    <input type="checkbox" ${task.status === "completed" ? "checked" : ""}> Completed
+                    <p>Status: ${task.status}</p>
                 `;
                 taskDiv.innerHTML = taskContent;
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.onchange = () => {
+                    checkboxClicked(task.id, task.status);
+                }
+                taskDiv.appendChild(checkbox);
+
 
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
@@ -33,8 +37,39 @@ function loadTasks () {
 
                 const tasksContainer = document.querySelector(".tasks");
                 tasksContainer.appendChild(taskDiv);
+}
+
+function loadTasks () {
+    fetch('/tasks')
+        .then(response => response.json())
+        .then(tasks => {
+            tasks.forEach(task => {
+                createTaskElement(task);
             });
         })
+}
+
+function checkboxClicked(taskId, taskStatus) {
+    alert("Checkbox clicked");
+    const newStatus = taskStatus === "completed" ? "pending" : "completed";
+    fetch(`/tasks/${taskId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: newStatus, status: newStatus })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Task status updated");
+        } else {
+            console.error("Error updating task status - response not ok");
+            alert("Error: Something went wrong!");
+        }
+    })
+    .catch(error => {
+        console.error("Error updating task status:", error);
+    });
 }
 
 function addTask() {
@@ -64,36 +99,7 @@ function addTask() {
     })
     .then(response => response.json())
     .then(task => {
-        console.log("Task added:", task);
-
-        const taskDiv = document.createElement("div");
-        taskDiv.classList.add("task");
-        taskDiv.setAttribute("data-id", task.id);
-        taskDiv.setAttribute("data-duedate", task.duedate);
-        taskDiv.setAttribute("data-assignee", task.assignee);
-        taskDiv.setAttribute("data-status", task.status);
-
-        const taskContent = `
-            <h3>${task.name}</h3>
-            <p>${task.description}</p>
-            <p>Deadline: ${task.duedate}</p>
-            <p>Assignee: ${task.assignee}</p>
-            <input type="checkbox" ${task.status === "completed" ? "checked" : ""}> Completed
-        `;
-        taskDiv.innerHTML = taskContent;
-
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.setAttribute("data-id", task.id);
-        deleteButton.onclick = () => {
-            deleteTask(task.id);
-        };
-
-        taskDiv.appendChild(deleteButton);
-
-        const tasksContainer = document.querySelector(".tasks");
-        tasksContainer.appendChild(taskDiv);
-
+        createTaskElement(task);
     })
     .then(() => {
         emptyFields();
