@@ -8,7 +8,8 @@ Die Applikation basiert auf einem Webinterface (Client) und einer python-Applika
 
 **Funktionsdiagramm mit Server- und Clientseite**
 
-![wlw_household_scheduler drawio](https://github.com/user-attachments/assets/609b13ca-db45-41ca-89b2-6863b4f4a444)
+![wlw_household_scheduler drawio](https://github.com/user-attachments/assets/3ba34a9c-b293-4c49-a38a-861798ee98c4)
+
 
 ##### Server
 
