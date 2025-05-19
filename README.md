@@ -27,7 +27,7 @@ Der Client ist eine Webseite auf welche innerhalb desselben LAN zugegriffen werd
 
 **Screenshot des Client**
 
-<img width="487" alt="screenshot_client" src="https://github.com/user-attachments/assets/8b7a90e0-3b16-4697-83ec-bd25db249ff0" />
+<img width="800" alt="screenshot_client" src="https://github.com/user-attachments/assets/8b7a90e0-3b16-4697-83ec-bd25db249ff0" />
 
 
 Wichtigstes Interface auf Clientseite ist die Datei app.js, welche für die Kommunikation mit der Serverseite und dynamischen Elemente der Seite verantwortlich ist. Beim Laden der Webseite werden nacheinander die im tasks.json abgelegten Tasks über app.py (serverseitig) geholt, dem Button für das Hinzufügen neuer Tasks seine Funktion zugewiesen und die Eingabefelder geleert. Danach kann über das klicken des Buttons "Add Task" ein neues Task zur Website hinzugefügt werden und durch klicken von "Delete Task" des jeweiligen Tasks dieses entfernt werden. Tasks können nicht namens- oder beschreibungslos sein.
