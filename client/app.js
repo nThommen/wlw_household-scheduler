@@ -20,11 +20,22 @@ function createTaskElement(task) {
                 taskDiv.innerHTML = taskContent;
 
                 const checkbox = document.createElement("input");
+                checkbox.classList.add("task-checkbox");
                 checkbox.type = "checkbox";
+                if (task.status === "completed") {
+                    checkbox.checked = true;
+                }
                 checkbox.onchange = () => {
+                    //checkbox.onchange actually gets called every time the box changes.
                     checkboxClicked(task.id, task.status);
+                    
                 }
                 taskDiv.appendChild(checkbox);
+
+                const checkboxLabel = document.createElement("label");
+                checkboxLabel.textContent = "Completed";
+                checkboxLabel.htmlFor = `task-checkbox-${task.id}`;
+                taskDiv.appendChild(checkboxLabel);
 
 
                 const deleteButton = document.createElement("button");
@@ -50,18 +61,19 @@ function loadTasks () {
 }
 
 function checkboxClicked(taskId, taskStatus) {
-    alert("Checkbox clicked");
     const newStatus = taskStatus === "completed" ? "pending" : "completed";
     fetch(`/tasks/${taskId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({name: newStatus, status: newStatus })
+        body: JSON.stringify({status: newStatus })
     })
     .then(response => {
         if (response.ok) {
             console.log("Task status updated");
+            document.querySelector(".tasks, ").innerHTML = "";
+            loadTasks();
         } else {
             console.error("Error updating task status - response not ok");
             alert("Error: Something went wrong!");
