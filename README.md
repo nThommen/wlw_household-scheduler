@@ -44,3 +44,15 @@ Die Datei index.html bildet die Benutzeroberfläche ab. Grob lässt sich diese u
 Dabei ist das Formular zum grössten Teil direkt in der html-Datei umgesetzt. Der Bereich für die Tasks besteht nur aus zwei verschachtelten divs, welche als Container für das flexbox-Layout dienen und einer Überschrift.
 
 In der Datei styles.css ist sehr einfach die Basis für das flexbox-Layout umgesetzt und ein Design für die children des Containers.
+
+### Inbetriebnahme
+
+Um den die App in Betrieb zu nehmen eignet sich z.B. ein Raspberry Pi als Host. Für einen ersten Test kann aber auch ein normaler PC als Host verwendet werden.
+
+##### Ablauf:
+
+1. Mittels *git clone https://github.com/nThommen/wlw_household-scheduler.git* das Repository auf die lokale Maschine klonen.
+2. Per Konsole in das Verzeichnis wechseln und danach ins Unterverzeichnis "server" -> *cd your_path/wlw_household-scheduler* , *cd server*
+3. Virtuelles Python-Environment einrichten und aktivieren -> *python3 -m venv venv* , *source venv/bin/activate*
+4. Dependencies installieren -> *pip install -r requirements.txt*
+5. Server starten -> *python app.py*
