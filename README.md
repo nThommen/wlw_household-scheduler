@@ -8,7 +8,8 @@ Die Applikation basiert auf einem Webinterface (Client) und einer python-Applika
 
 **Funktionsdiagramm mit Server- und Clientseite**
 
-![wlw_household_scheduler drawio](https://github.com/user-attachments/assets/3ba34a9c-b293-4c49-a38a-861798ee98c4)
+
+![wlw_household_scheduler drawio](https://github.com/user-attachments/assets/ee3cef2b-b762-4313-b55a-f84b8be9b62e)
 
 
 ##### Server
@@ -16,6 +17,8 @@ Die Applikation basiert auf einem Webinterface (Client) und einer python-Applika
 Der Server wird mittels Pyflask-App auf einem Raspby gehostet.
 
 **GET-Endpoint:** Durch den GET-Endpoint get.tasks() werden die aufgelisteten Tasks aus dem JSON-File geholt und app.js als Liste übergeben.
+
+**PUT-Endpoint:** Der PUT-Endpoint dient dazu, ein Task serverseitig gezielt zu updaten. Dadurch lässt sich etwa der Status eines Tasks tracken, welcher duch setzen des Häckchens in der "Completed"-Checkbox geändert werden kann. 
 
 **POST-Endpoint:** Der POST-Endpoint nimmt durch betätigen des Buttons "Add Task" die Strings aus den Feldern "Task Name", "Task Description", "Due Date" und "Asignee" entgegen und fügt diese als neuen Task dem JSON-File hinzu.
 
