@@ -57,3 +57,4 @@ Um den die App in Betrieb zu nehmen eignet sich z.B. ein Raspberry Pi als Host. 
 3. Virtuelles Python-Environment einrichten und aktivieren -> *python3 -m venv venv* , *source venv/bin/activate*
 4. Dependencies installieren -> *pip install -r requirements.txt*
 5. Server starten -> *python app.py*
+6. Entweder per http://localhost:5000 wenn PC als Host verwendet auf Server zugreifen oder per http://<ip_adresse_raspi>:5000 wenn Server auf Raspberry Pi läuft.
